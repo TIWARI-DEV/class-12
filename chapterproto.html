@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Database Concepts | Comprehensive Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a0ca3;
+      --secondary: #f72585;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --success: #2a9d8f;
+      --warning: #f4a261;
+      --danger: #e76f51;
+      --info: #4a6fa5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.8;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      animation: pulse 15s infinite linear;
+    }
+
+    @keyframes pulse {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    h2 {
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--accent);
+      display: inline-block;
+    }
+
+    h3 {
+      color: var(--primary);
+      margin: 1.5rem 0 1rem;
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      color: var(--gray);
+      margin: 1.2rem 0 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    nav {
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--primary-dark);
+      margin: 0.5rem 1rem;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a:hover, nav a:focus {
+      background: rgba(67, 97, 238, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    nav a i {
+      font-size: 1rem;
+    }
+
+    section {
+      background: white;
+      margin: 2rem auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem;
+      max-width: 1100px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    strong {
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    ul, ol {
+      margin: 1rem 0 1.5rem 2rem;
+    }
+
+    li {
+      margin-bottom: 0.7rem;
+      position: relative;
+    }
+
+    li::before {
+      content: '•';
+      color: var(--secondary);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      flex: 1 1 300px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary);
+    }
+
+    .card h3 {
+      color: var(--primary-dark);
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .comparison-table th, .comparison-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .comparison-table th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+    }
+
+    .comparison-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    .comparison-table tr:hover {
+      background-color: rgba(67, 97, 238, 0.05);
+    }
+
+    .example-box {
+      background: #f8f9fa;
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-radius: 0 4px 4px 0;
+      font-family: 'Roboto Mono', monospace;
+      overflow-x: auto;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-primary {
+      background: rgba(67, 97, 238, 0.1);
+      color: var(--primary);
+    }
+
+    .badge-success {
+      background: rgba(42, 157, 143, 0.1);
+      color: var(--success);
+    }
+
+    .badge-warning {
+      background: rgba(244, 162, 97, 0.1);
+      color: var(--warning);
+    }
+
+    .badge-danger {
+      background: rgba(231, 111, 81, 0.1);
+      color: var(--danger);
+    }
+
+    .badge-info {
+      background: rgba(74, 111, 165, 0.1);
+      color: var(--info);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--dark);
+      color: white;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 0.5rem;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* New graphic elements */
+    .diagram-container {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: center;
+    }
+
+    .diagram {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .process-steps {
+      counter-reset: step-counter;
+      margin: 2rem 0;
+    }
+
+    .process-step {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .process-step::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2rem;
+      height: 2rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 2rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--primary);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: var(--secondary);
+      border: 2px solid white;
+      box-shadow: 0 0 0 3px var(--secondary);
+    }
+
+    .timeline-date {
+      font-weight: bold;
+      color: var(--primary-dark);
+    }
+
+    .timeline-content {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+
+    .feature-box {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
+
+    .feature-content {
+      flex-grow: 1;
+    }
+
+    /* Database schema visualization */
+    .schema-diagram {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      font-family: 'Roboto Mono', monospace;
+      position: relative;
+    }
+
+    .schema-table {
+      margin-bottom: 2rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .schema-table-header {
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+    }
+
+    .schema-table-column {
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .schema-table-column:last-child {
+      border-bottom: none;
+    }
+
+    .schema-pk {
+      color: var(--success);
+    }
+
+    .schema-fk {
+      color: var(--warning);
+    }
+
+    .schema-relationship {
+      margin-left: 2rem;
+      padding-left: 1rem;
+      border-left: 2px dashed var(--accent);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      section {
+        padding: 1.5rem;
+        margin: 1.5rem;
+      }
+      
+      nav a {
+        margin: 0.3rem 0.5rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .card-container {
+        flex-direction: column;
+      }
+
+      .card {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Database Concepts</h1>
+  <p>A Comprehensive Guide to Modern Database Systems</p>
+</header>
+
+<nav>
+  <a href="#data"><i class="fas fa-database"></i> Data Fundamentals</a>
+  <a href="#dbms"><i class="fas fa-server"></i> DBMS</a>
+  <a href="#models"><i class="fas fa-project-diagram"></i> Database Models</a>
+  <a href="#architecture"><i class="fas fa-sitemap"></i> Architecture</a>
+  <a href="#constraints"><i class="fas fa-lock"></i> Constraints</a>
+  <a href="#normalization"><i class="fas fa-layer-group"></i> Normalization</a>
+  <a href="#transactions"><i class="fas fa-exchange-alt"></i> Transactions</a>
+  <a href="#distributed"><i class="fas fa-network-wired"></i> Distributed Systems</a>
+  <a href="#security"><i class="fas fa-shield-alt"></i> Security</a>
+  <a href="#trends"><i class="fas fa-chart-line"></i> Emerging Trends</a>
+</nav>
+
+<section id="data">
+  <h2>Data, Information & Features</h2>
+  
+  <div class="card-container">
+    <div class="card">
+      <h3>Data</h3>
+      <p>Raw facts and figures without context, such as numbers, text, images, etc. Data becomes meaningful only when processed and interpreted.</p>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-table"></i>
+        </div>
+        <div class="feature-content">
+          <p><strong>Example:</strong> "25, 42, 37" are raw numbers without context.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Information</h3>
+      <p>Processed data that has meaning, context, and relevance. Information answers "who", "what", "where", and "when" questions.</p>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="feature-content">
+          <p><strong>Example:</strong> "The average temperature this week was 34.6°C" provides meaningful information.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Knowledge</h3>
+      <p>The application of information to make decisions or predictions. Knowledge answers "how" questions and represents understanding.</p>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <div class="feature-content">
+          <p><strong>Example:</strong> "Temperatures above 35°C may cause heat exhaustion, so outdoor activities should be limited."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Data+Information+Knowledge+Pyramid" alt="Data Information Knowledge Pyramid" class="diagram">
+  </div>
+
+  <h3>Characteristics of Quality Information</h3>
+  <div class="card-container">
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Accuracy</h3>
+          <p>Information must be free from errors and correctly represent the real-world scenario it describes.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Timeliness</h3>
+          <p>Information must be available when needed, not outdated when used for decision-making.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-link"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Relevance</h3>
+          <p>Information must be pertinent to the current context and decision-making needs.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-clipboard-check"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Completeness</h3>
+          <p>Information should contain all necessary details without missing critical elements.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-random"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Consistency</h3>
+          <p>Information should be uniform across different parts of the database and over time.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-key"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Accessibility</h3>
+          <p>Information should be easily retrievable by authorized users when needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Database and Its Purpose</h3>
+  <p>A database is a structured collection of data that is organized to model relevant aspects of reality in a way that supports processes requiring information.</p>
+  
+  <div class="process-steps">
+    <div class="process-step">
+      <h3>Data Organization</h3>
+      <p>Structures data in a logical manner for efficient storage and retrieval</p>
+    </div>
+    <div class="process-step">
+      <h3>Information Management</h3>
+      <p>Provides tools for creating, reading, updating, and deleting information</p>
+    </div>
+    <div class="process-step">
+      <h3>Knowledge Extraction</h3>
+      <p>Supports complex queries and analysis to derive insights from data</p>
+    </div>
+  </div>
+
+  <h3>Database Terminologies</h3>
+  <div class="schema-diagram">
+    <h3>Sample Database Schema</h3>
+    
+    <div class="schema-table">
+      <div class="schema-table-header">CUSTOMERS</div>
+      <div class="schema-table-column"><span class="schema-pk">CustomerID</span> <span>INT (PK)</span></div>
+      <div class="schema-table-column">CustomerName <span>VARCHAR(100)</span></div>
+      <div class="schema-table-column">Email <span>VARCHAR(255)</span></div>
+      <div class="schema-table-column">JoinDate <span>DATE</span></div>
+    </div>
+    
+    <div class="schema-relationship">
+      <i class="fas fa-arrow-down"></i> 1-to-Many Relationship
+    </div>
+    
+    <div class="schema-table">
+      <div class="schema-table-header">ORDERS</div>
+      <div class="schema-table-column"><span class="schema-pk">OrderID</span> <span>INT (PK)</span></div>
+      <div class="schema-table-column"><span class="schema-fk">CustomerID</span> <span>INT (FK)</span></div>
+      <div class="schema-table-column">OrderDate <span>DATETIME</span></div>
+      <div class="schema-table-column">TotalAmount <span>DECIMAL(10,2)</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="dbms">
+  <h2>Database Management System (DBMS)</h2>
+  
+  <h3>Introduction to DBMS</h3>
+  <p>A DBMS is software that interacts with end users, applications, and the database itself to capture and analyze data. It serves as an interface between the database and end users or application programs, ensuring that data is consistently organized and remains easily accessible.</p>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=DBMS+Architecture+Diagram" alt="DBMS Architecture Diagram" class="diagram">
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Core Functions</h3>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-database"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Data Definition</h4>
+          <p>Creation, modification, and removal of database structures</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Data Retrieval</h4>
+          <p>Querying and reporting capabilities</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-edit"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Data Manipulation</h4>
+          <p>Insertion, updating, and deletion of records</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Advanced Features</h3>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Security</h4>
+          <p>Authentication, authorization, and access control</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-check-double"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Integrity</h4>
+          <p>Maintaining data accuracy and consistency</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon">
+          <i class="fas fa-history"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Recovery</h4>
+          <p>Backup and restore capabilities</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>DBMS Architecture Components</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Storage Engine</h3>
+      <p>Manages how data is stored on disk and retrieved</p>
+      <span class="badge badge-info">Performance</span>
+    </div>
+    <div class="card">
+      <h3>Query Processor</h3>
+      <p>Interprets and executes SQL queries efficiently</p>
+      <span class="badge badge-info">Optimization</span>
+    </div>
+    <div class="card">
+      <h3>Transaction Manager</h3>
+      <p>Ensures ACID properties for database transactions</p>
+      <span class="badge badge-info">Reliability</span>
+    </div>
+    <div class="card">
+      <h3>Concurrency Control</h3>
+      <p>Manages simultaneous access by multiple users</p>
+      <span class="badge badge-info">Consistency</span>
+    </div>
+  </div>
+
+  <h3>Popular DBMS Examples</h3>
+  <div class="card-container">
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: #00758f;">
+          <i class="fas fa-database"></i>
+        </div>
+        <div class="feature-content">
+          <h3>MySQL</h3>
+          <p>Open-source relational database known for web applications</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: #336791;">
+          <i class="fas fa-database"></i>
+        </div>
+        <div class="feature-content">
+          <h3>PostgreSQL</h3>
+          <p>Advanced open-source database with extensive features</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: #f80000;">
+          <i class="fas fa-database"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Oracle</h3>
+          <p>Enterprise-grade database with robust features</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: #10aa53;">
+          <i class="fas fa-database"></i>
+        </div>
+        <div class="feature-content">
+          <h3>MongoDB</h3>
+          <p>Leading NoSQL document database</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="models">
+  <h2>Types of Database Models</h2>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">1960s</div>
+      <div class="timeline-content">
+        <h3>Hierarchical Model</h3>
+        <p>Tree-like structure with parent-child relationships where each child has only one parent.</p>
+        <p><strong>Use Case:</strong> Early mainframe databases, file systems</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">1970s</div>
+      <div class="timeline-content">
+        <h3>Network Model</h3>
+        <p>Extension of hierarchical model allowing multiple parent-child relationships (many-to-many).</p>
+        <p><strong>Use Case:</strong> Complex manufacturing systems</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">1980s</div>
+      <div class="timeline-content">
+        <h3>Relational Model</h3>
+        <p>Organizes data into tables (relations) with rows and columns, using keys to establish relationships.</p>
+        <p><strong>Use Case:</strong> Most modern business applications</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">1990s</div>
+      <div class="timeline-content">
+        <h3>Object-Oriented Model</h3>
+        <p>Stores data as objects with attributes and methods, similar to object-oriented programming.</p>
+        <p><strong>Use Case:</strong> Complex data in engineering, multimedia</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2000s</div>
+      <div class="timeline-content">
+        <h3>NoSQL Models</h3>
+        <p>Various non-relational models including document, key-value, column-family, and graph.</p>
+        <p><strong>Use Case:</strong> Big data, real-time web apps</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Relational Model Components</h3>
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Relational+Model+Components" alt="Relational Model Components" class="diagram">
+  </div>
+
+  <h3>NoSQL Database Types</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Document Stores</h3>
+      <p>Store data in document formats like JSON (MongoDB, CouchDB)</p>
+      <span class="badge badge-success">Flexible Schema</span>
+    </div>
+    <div class="card">
+      <h3>Key-Value Stores</h3>
+      <p>Simple pairs of keys and values (Redis, DynamoDB)</p>
+      <span class="badge badge-success">High Performance</span>
+    </div>
+    <div class="card">
+      <h3>Column-Family Stores</h3>
+      <p>Store data in columns rather than rows (Cassandra, HBase)</p>
+      <span class="badge badge-success">Scalability</span>
+    </div>
+    <div class="card">
+      <h3>Graph Databases</h3>
+      <p>Store entities and relationships as nodes and edges (Neo4j, ArangoDB)</p>
+      <span class="badge badge-success">Relationship Focus</span>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <h2>Database System Architecture</h2>
+  
+  <p>The architecture of a database system is greatly influenced by the underlying computer system on which it runs. Modern database systems use a client-server architecture where database functionality is divided between clients and servers.</p>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Three-Schema+Architecture" alt="Three-Schema Architecture" class="diagram">
+  </div>
+  
+  <h3>Three-Schema Architecture</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>External Level (View Level)</h3>
+      <p>Describes the part of the database that specific users are interested in. Multiple views can exist for different user groups.</p>
+      <div class="example-box">
+        <p>Example: A student view shows only course information relevant to them</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Conceptual Level (Logical Level)</h3>
+      <p>Describes what data is stored in the database and the relationships among the data. Represents the entire database for a community of users.</p>
+      <div class="example-box">
+        <p>Example: Entity-relationship model of the entire university database</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Internal Level (Physical Level)</h3>
+      <p>Describes how the data is physically stored in the database (files, indexes, storage structures).</p>
+      <div class="example-box">
+        <p>Example: B+ tree indexes, hash tables, storage allocation</p>
+      </div>
+    </div>
+  </div>
+  
+  <h3>Database System Components</h3>
+  <div class="process-steps">
+    <div class="process-step">
+      <h3>Query Processor</h3>
+      <p>Translates queries into low-level instructions the database manager understands. Includes DDL interpreter, DML compiler, and query evaluation engine.</p>
+    </div>
+    <div class="process-step">
+      <h3>Storage Manager</h3>
+      <p>Provides the interface between the low-level data stored in the database and the application programs and queries submitted to the system. Includes components like buffer manager, file manager, and transaction manager.</p>
+    </div>
+    <div class="process-step">
+      <h3>Transaction Manager</h3>
+      <p>Ensures the database remains in a consistent (correct) state despite system failures and concurrent transaction executions. Responsible for ACID properties.</p>
+    </div>
+  </div>
+  
+  <h3>Data Independence</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Logical Data Independence</h3>
+      <p>The capacity to change the conceptual schema without having to change external schemas or application programs. Changes like adding new entities, attributes, or relationships can be made without rewriting existing applications.</p>
+    </div>
+    <div class="card">
+      <h3>Physical Data Independence</h3>
+      <p>The capacity to change the internal schema without having to change the conceptual schema. Changes like using different file organizations, storage structures, or devices can be made without affecting the logical structure.</p>
+    </div>
+  </div>
+</section>
+
+<section id="constraints">
+  <h2>Integrity Constraints</h2>
+  
+  <p>Integrity constraints are rules that maintain the accuracy and consistency of data in a database. They prevent invalid data entry and maintain relationships between tables.</p>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Database+Constraints+Visualization" alt="Database Constraints Visualization" class="diagram">
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Domain Constraints</h3>
+      <p>Ensure that only valid data within a specific domain is entered into a column.</p>
+      <div class="example-box">
+        <p>CREATE TABLE Students (</p>
+        <p>  Age INT CHECK (Age >= 18 AND Age <= 65),</p>
+        <p>  Grade CHAR(1) CHECK (Grade IN ('A', 'B', 'C', 'D', 'F'))</p>
+        <p>);</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Entity Integrity</h3>
+      <p>Ensures each table has a primary key that is unique and not null.</p>
+      <div class="example-box">
+        <p>CREATE TABLE Customers (</p>
+        <p>  CustomerID INT PRIMARY KEY,</p>
+        <p>  Name VARCHAR(100) NOT NULL</p>
+        <p>);</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Referential Integrity</h3>
+      <p>Maintains consistency between related tables through foreign key relationships.</p>
+      <div class="example-box">
+        <p>CREATE TABLE Orders (</p>
+        <p>  OrderID INT PRIMARY KEY,</p>
+        <p>  CustomerID INT REFERENCES Customers(CustomerID),</p>
+        <p>  OrderDate DATE NOT NULL</p>
+        <p>);</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Key Constraints</h3>
+      <p>Define rules for primary keys, foreign keys, and unique constraints.</p>
+      <div class="example-box">
+        <p>-- Composite primary key</p>
+        <p>CREATE TABLE Enrollments (</p>
+        <p>  StudentID INT,</p>
+        <p>  CourseID INT,</p>
+        <p>  PRIMARY KEY (StudentID, CourseID)</p>
+        <p>);</p>
+      </div>
+    </div>
+  </div>
+  
+  <h3>Constraint Types in Detail</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Constraint Type</th>
+        <th>Purpose</th>
+        <th>Implementation</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>NOT NULL</td>
+        <td>Ensures a column cannot have NULL value</td>
+        <td>Column constraint</td>
+        <td>Name VARCHAR(100) NOT NULL</td>
+      </tr>
+      <tr>
+        <td>UNIQUE</td>
+        <td>Ensures all values in a column are unique</td>
+        <td>Column or table constraint</td>
+        <td>Email VARCHAR(255) UNIQUE</td>
+      </tr>
+      <tr>
+        <td>PRIMARY KEY</td>
+        <td>Uniquely identifies each record in a table</td>
+        <td>Column or table constraint</td>
+        <td>ID INT PRIMARY KEY</td>
+      </tr>
+      <tr>
+        <td>FOREIGN KEY</td>
+        <td>Maintains referential integrity between tables</td>
+        <td>Column or table constraint</td>
+        <td>FOREIGN KEY (DeptID) REFERENCES Departments(ID)</td>
+      </tr>
+      <tr>
+        <td>CHECK</td>
+        <td>Ensures values meet specific conditions</td>
+        <td>Column or table constraint</td>
+        <td>Age INT CHECK (Age >= 18)</td>
+      </tr>
+      <tr>
+        <td>DEFAULT</td>
+        <td>Sets a default value for a column</td>
+        <td>Column constraint</td>
+        <td>CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <h3>Referential Actions</h3>
+  <p>When dealing with foreign key constraints, you can specify actions to be taken when referenced data is updated or deleted:</p>
+  
+  <div class="card-container">
+    <div class="card">
+      <h3>CASCADE</h3>
+      <p>Automatically update or delete child rows when parent rows are updated or deleted.</p>
+      <div class="example-box">
+        <p>FOREIGN KEY (DeptID) REFERENCES Departments(ID)</p>
+        <p>ON DELETE CASCADE</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>SET NULL</h3>
+      <p>Set foreign key values to NULL when the referenced row is deleted.</p>
+      <div class="example-box">
+        <p>FOREIGN KEY (ManagerID) REFERENCES Employees(ID)</p>
+        <p>ON DELETE SET NULL</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>RESTRICT</h3>
+      <p>Prevent deletion of referenced rows (default behavior in most systems).</p>
+      <div class="example-box">
+        <p>FOREIGN KEY (AccountID) REFERENCES Accounts(ID)</p>
+        <p>ON DELETE RESTRICT</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="normalization">
+  <h2>Database Normalization</h2>
+  
+  <p>Normalization is the process of organizing data in a database to minimize redundancy and dependency by dividing large tables into smaller, more manageable tables and defining relationships between them.</p>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Normalization+Process+Flow" alt="Normalization Process Flow" class="diagram">
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>First Normal Form (1NF)</h3>
+      <p>A table is in 1NF if:</p>
+      <ul>
+        <li>Contains only atomic (indivisible) values</li>
+        <li>No repeating groups or arrays</li>
+        <li>Each record is unique (no duplicate rows)</li>
+      </ul>
+      <div class="example-box">
+        <p>Before 1NF (Repeating Groups):</p>
+        <p>StudentID | Name | Courses</p>
+        <p>1 | John | Math, Science, History</p>
+        <p>After 1NF:</p>
+        <p>StudentID | Name | Course</p>
+        <p>1 | John | Math</p>
+        <p>1 | John | Science</p>
+        <p>1 | John | History</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Second Normal Form (2NF)</h3>
+      <p>A table is in 2NF if:</p>
+      <ul>
+        <li>It's already in 1NF</li>
+        <li>All non-key attributes are fully functionally dependent on the entire primary key</li>
+        <li>No partial dependency (for composite keys)</li>
+      </ul>
+      <div class="example-box">
+        <p>Before 2NF (Partial Dependency):</p>
+        <p>OrderID | ProductID | ProductName | Quantity</p>
+        <p>After 2NF:</p>
+        <p>Orders: OrderID | ProductID | Quantity</p>
+        <p>Products: ProductID | ProductName</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Third Normal Form (3NF)</h3>
+      <p>A table is in 3NF if:</p>
+      <ul>
+        <li>It's already in 2NF</li>
+        <li>No transitive dependency (non-key attributes depend only on the primary key)</li>
+      </ul>
+      <div class="example-box">
+        <p>Before 3NF (Transitive Dependency):</p>
+        <p>StudentID | Name | Department | DeptHead</p>
+        <p>After 3NF:</p>
+        <p>Students: StudentID | Name | DepartmentID</p>
+        <p>Departments: DepartmentID | Department | DeptHead</p>
+      </div>
+    </div>
+  </div>
+  
+  <h3>Normalization Examples</h3>
+  <div class="schema-diagram">
+    <h3>Unnormalized Form (UNF)</h3>
+    <div class="schema-table">
+      <div class="schema-table-header">ORDERS</div>
+      <div class="schema-table-column">OrderID <span>INT</span></div>
+      <div class="schema-table-column">CustomerID <span>INT</span></div>
+      <div class="schema-table-column">OrderDate <span>DATE</span></div>
+      <div class="schema-table-column">Products <span>LIST: Product1, Product2, ...</span></div>
+    </div>
+    
+    <div class="schema-relationship">
+      <i class="fas fa-arrow-down"></i> Convert to 1NF
+    </div>
+    
+    <div class="schema-table">
+      <div class="schema-table-header">ORDERS</div>
+      <div class="schema-table-column">OrderID <span>INT</span></div>
+      <div class="schema-table-column">CustomerID <span>INT</span></div>
+      <div class="schema-table-column">OrderDate <span>DATE</span></div>
+      <div class="schema-table-column">ProductID <span>INT</span></div>
+      <div class="schema-table-column">ProductName <span>VARCHAR</span></div>
+    </div>
+    
+    <div class="schema-relationship">
+      <i class="fas fa-arrow-down"></i> Convert to 2NF
+    </div>
+    
+    <div class="schema-table">
+      <div class="schema-table-header">ORDER_ITEMS</div>
+      <div class="schema-table-column"><span class="schema-pk">OrderID</span> <span>INT (PK)</span></div>
+      <div class="schema-table-column"><span class="schema-pk">ProductID</span> <span>INT (PK)</span></div>
+      <div class="schema-table-column">Quantity <span>INT</span></div>
+    </div>
+    
+    <div class="schema-table">
+      <div class="schema-table-header">PRODUCTS</div>
+      <div class="schema-table-column"><span class="schema-pk">ProductID</span> <span>INT (PK)</span></div>
+      <div class="schema-table-column">ProductName <span>VARCHAR</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="transactions">
+  <h2>Database Transactions</h2>
+  
+  <p>A transaction is a sequence of operations performed as a single logical unit of work. A transaction must be atomic, consistent, isolated, and durable (ACID properties).</p>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Transaction+ACID+Properties" alt="Transaction ACID Properties" class="diagram">
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Atomicity</h3>
+      <p>Ensures that all operations within a transaction are completed successfully; otherwise, none are. If any part fails, the entire transaction fails.</p>
+      <div class="example-box">
+        <p>BEGIN TRANSACTION;</p>
+        <p>UPDATE Accounts SET Balance = Balance - 100 WHERE AccountID = 1;</p>
+        <p>UPDATE Accounts SET Balance = Balance + 100 WHERE AccountID = 2;</p>
+        <p>COMMIT; -- Both updates succeed or both fail</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Consistency</h3>
+      <p>Ensures that a transaction brings the database from one valid state to another, maintaining database invariants.</p>
+      <div class="example-box">
+        <p>-- Total balance across all accounts should remain constant</p>
+        <p>-- Any transaction must maintain this invariant</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Isolation</h3>
+      <p>Ensures that concurrent execution of transactions leaves the database in the same state as if transactions were executed sequentially.</p>
+      <div class="example-box">
+        <p>SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</p>
+        <p>-- Ensures highest isolation level</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Durability</h3>
+      <p>Ensures that once a transaction has been committed, it will remain committed even in the event of a system failure.</p>
+      <div class="example-box">
+        <p>-- Committed transactions are written to non-volatile storage</p>
+        <p>-- Survives power failures or system crashes</p>
+      </div>
+    </div>
+  </div>
+  
+  <h3>Transaction States</h3>
+  <div class="process-steps">
+    <div class="process-step">
+      <h3>Active</h3>
+      <p>The initial state where the transaction is executing.</p>
+    </div>
+    <div class="process-step">
+      <h3>Partially Committed</h3>
+      <p>After the final operation has executed but before commit.</p>
+    </div>
+    <div class="process-step">
+      <h3>Committed</h3>
+      <p>After successful completion and system has ensured updates persist.</p>
+    </div>
+    <div class="process-step">
+      <h3>Failed</h3>
+      <p>After discovery that normal execution can no longer proceed.</p>
+    </div>
+    <div class="process-step">
+      <h3>Aborted</h3>
+      <p>After the transaction has been rolled back and database restored.</p>
+    </div>
+  </div>
+  
+  <h3>Concurrency Control</h3>
+  <p>Concurrency control ensures correct results for concurrent operations while maximizing performance. Common techniques include:</p>
+  
+  <div class="card-container">
+    <div class="card">
+      <h3>Locking</h3>
+      <p>Prevents multiple transactions from accessing the same data simultaneously.</p>
+      <div class="example-box">
+        <p>-- Shared (read) lock vs. Exclusive (write) lock</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Timestamp Ordering</h3>
+      <p>Assigns timestamps to transactions and ensures they execute in timestamp order.</p>
+    </div>
+    <div class="card">
+      <h3>Optimistic Concurrency</h3>
+      <p>Assumes conflicts are rare and checks for them only at commit time.</p>
+    </div>
+    <div class="card">
+      <h3>Multiversion Concurrency</h3>
+      <p>Maintains multiple versions of data items to allow read operations without blocking.</p>
+    </div>
+  </div>
+  
+  <h3>Transaction Isolation Levels</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Isolation Level</th>
+        <th>Dirty Read</th>
+        <th>Non-repeatable Read</th>
+        <th>Phantom Read</th>
+        <th>Performance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Read Uncommitted</td>
+        <td>Possible</td>
+        <td>Possible</td>
+        <td>Possible</td>
+        <td>Highest</td>
+      </tr>
+      <tr>
+        <td>Read Committed</td>
+        <td>Not possible</td>
+        <td>Possible</td>
+        <td>Possible</td>
+        <td>High</td>
+      </tr>
+      <tr>
+        <td>Repeatable Read</td>
+        <td>Not possible</td>
+        <td>Not possible</td>
+        <td>Possible</td>
+        <td>Medium</td>
+      </tr>
+      <tr>
+        <td>Serializable</td>
+        <td>Not possible</td>
+        <td>Not possible</td>
+        <td>Not possible</td>
+        <td>Lowest</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="distributed">
+  <h2>Centralized vs Distributed Databases</h2>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Centralized+vs+Distributed+Architecture" alt="Centralized vs Distributed Architecture" class="diagram">
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Centralized Database</h3>
+      <p>A database located, stored, and maintained at a single location (a single computer or server).</p>
+      
+      <h4>Characteristics:</h4>
+      <ul>
+        <li>Single database file at one location</li>
+        <li>All users connect to this central database</li>
+        <li>Uniform management and administration</li>
+      </ul>
+      
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--success);">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Advantages:</h4>
+          <ul>
+            <li>Simpler to design and maintain</li>
+            <li>Easier data integrity enforcement</li>
+            <li>Stronger security controls</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--danger);">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Disadvantages:</h4>
+          <ul>
+            <li>Single point of failure</li>
+            <li>Performance bottleneck with many users</li>
+            <li>Limited scalability</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>Distributed Database</h3>
+      <p>A database in which portions of the database are stored on multiple computers within a network, with processing distributed or replicated among different points.</p>
+      
+      <h4>Characteristics:</h4>
+      <ul>
+        <li>Data is distributed across multiple locations</li>
+        <li>Can be homogenous or heterogeneous</li>
+        <li>Data may be partitioned or replicated</li>
+      </ul>
+      
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--success);">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Advantages:</h4>
+          <ul>
+            <li>Improved performance through parallel processing</li>
+            <li>Increased reliability and availability</li>
+            <li>Better scalability</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--danger);">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="feature-content">
+          <h4>Disadvantages:</h4>
+          <ul>
+            <li>Complex design and implementation</li>
+            <li>Higher hardware and software costs</li>
+            <li>More difficult to maintain data consistency</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <h3>Distributed Database Architectures</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Client-Server</h3>
+      <p>Central server manages the database while clients request services.</p>
+      <span class="badge badge-info">Simple</span>
+    </div>
+    <div class="card">
+      <h3>Peer-to-Peer</h3>
+      <p>All nodes are equal and share responsibility for data management.</p>
+      <span class="badge badge-info">Decentralized</span>
+    </div>
+    <div class="card">
+      <h3>Multi-tier</h3>
+      <p>Separates presentation, application processing, and data management.</p>
+      <span class="badge badge-info">Scalable</span>
+    </div>
+    <div class="card">
+      <h3>Federated</h3>
+      <p>Autonomous databases cooperate in a federation while remaining independent.</p>
+      <span class="badge badge-info">Flexible</span>
+    </div>
+  </div>
+  
+  <h3>Data Distribution Strategies</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Partitioning (Sharding)</h3>
+      <p>Divides a database into smaller, more manageable pieces called partitions or shards.</p>
+      <div class="example-box">
+        <p>-- Horizontal partitioning by customer region</p>
+        <p>-- Each server handles customers from specific geographic areas</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Replication</h3>
+      <p>Maintains copies of data across multiple nodes to improve availability and fault tolerance.</p>
+      <div class="example-box">
+        <p>-- Master-slave replication for read scaling</p>
+        <p>-- Multi-master replication for write scaling</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <h2>Database Security</h2>
+  
+  <p>Database security encompasses all measures taken to protect the database from unauthorized access, misuse, alteration, or destruction. It's a critical aspect of database administration that ensures confidentiality, integrity, and availability of data.</p>
+  
+  <div class="diagram-container">
+    <img src="https://via.placeholder.com/800x400?text=Database+Security+Framework" alt="Database Security Framework" class="diagram">
+  </div>
+
+  <h3>Database Security Challenges</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Unauthorized Access</h3>
+      <p>Preventing users from accessing data beyond their privileges.</p>
+      <span class="badge badge-danger">Critical</span>
+    </div>
+    <div class="card">
+      <h3>SQL Injection</h3>
+      <p>Malicious SQL code inserted into input fields to manipulate the database.</p>
+      <span class="badge badge-danger">Critical</span>
+    </div>
+    <div class="card">
+      <h3>Data Leakage</h3>
+      <p>Unauthorized transmission of data from within an organization to an external destination.</p>
+      <span class="badge badge-warning">High</span>
+    </div>
+    <div class="card">
+      <h3>Loss of Data Integrity</h3>
+      <p>Data becoming invalid or corrupted due to errors or malicious actions.</p>
+      <span class="badge badge-warning">High</span>
+    </div>
+    <div class="card">
+      <h3>Denial of Service</h3>
+      <p>Attacks that make database resources unavailable to legitimate users.</p>
+      <span class="badge badge-warning">High</span>
+    </div>
+    <div class="card">
+      <h3>Insider Threats</h3>
+      <p>Malicious actions by authorized users with legitimate access.</p>
+      <span class="badge badge-danger">Critical</span>
+    </div>
+  </div>
+  
+  <h3>Database Security Measures</h3>
+  <div class="card-container">
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--primary);">
+          <i class="fas fa-user-lock"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Authentication</h3>
+          <p>Verifying the identity of users before granting access. Methods include passwords, biometrics, multi-factor authentication.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--primary);">
+          <i class="fas fa-user-tag"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Authorization</h3>
+          <p>Granting specific privileges to users based on roles (RBAC) or attributes (ABAC).</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--primary);">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Encryption</h3>
+          <p>Protecting data at rest (storage) and in transit (network) using cryptographic algorithms.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--primary);">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Auditing</h3>
+          <p>Tracking and logging database activities for security monitoring and forensic analysis.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--primary);">
+          <i class="fas fa-file-archive"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Backup and Recovery</h3>
+          <p>Regular backups and tested recovery procedures to protect against data loss.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-box">
+        <div class="feature-icon" style="background: var(--primary);">
+          <i class="fas fa-shield-virus"></i>
+        </div>
+        <div class="feature-content">
+          <h3>Network Security</h3>
+          <p>Firewalls, VPNs, and intrusion detection systems to protect database servers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <h3>SQL Injection Protection</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>Prepared Statements</h3>
+      <p>Use parameterized queries to separate SQL code from data.</p>
+      <div class="example-box">
+        <p>-- Vulnerable:</p>
+        <p>query = "SELECT * FROM users WHERE username = '" + username + "'";</p>
+        <p>-- Secure:</p>
+        <p>stmt = db.prepare("SELECT * FROM users WHERE username = ?");</p>
+        <p>stmt.execute([username]);</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Input Validation</h3>
+      <p>Validate and sanitize all user inputs before processing.</p>
+      <div class="example-box">
+        <p>-- Whitelist validation</p>
+        <p>if (!username.match(/^[a-zA-Z0-9_]+$/)) {</p>
+        <p>  throw new Error("Invalid username");</p>
+        <p>}</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Least Privilege</h3>
+      <p>Database accounts should have minimal required permissions.</p>
+      <div class="example-box">
+        <p>-- Application user should only have SELECT, INSERT, UPDATE</p>
+        <p>-- Never use sa/root accounts for applications</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trends">
+  <h2>Emerging Database Trends</h2>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">Current</div>
+      <div class="timeline-content">
+        <h3>Cloud Databases</h3>
+        <p>Fully managed database services offered by cloud providers (AWS RDS, Azure SQL, Google Cloud SQL) with automated scaling, backups, and maintenance.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Recent</div>
+      <div class="timeline-content">
+        <h3>Serverless Databases</h3>
+        <p>Databases that automatically scale to zero when not in use, charging only for actual usage (AWS Aurora Serverless, Firebase).</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Emerging</div>
+      <div class="timeline-content">
+        <h3>Blockchain Databases</h3>
+        <p>Decentralized databases with immutable ledgers and consensus mechanisms for trustless environments.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Future</div>
+      <div class="timeline-content">
+        <h3>Quantum Databases</h3>
+        <p>Databases leveraging quantum computing principles for unprecedented performance in certain operations.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Modern Database Technologies</h3>
+  <div class="card-container">
+    <div class="card">
+      <h3>NewSQL Databases</h3>
+      <p>Combine the scalability of NoSQL with the ACID guarantees of traditional RDBMS (CockroachDB, Google Spanner).</p>
+      <span class="badge badge-success">Scalable</span>
+    </div>
+    <div class="card">
+      <h3>Time-Series Databases</h3>
+      <p>Optimized for time-stamped data (InfluxDB, TimescaleDB) with efficient storage and querying of time-based metrics.</p>
+      <span class="badge badge-success">Performance</span>
+    </div>
+    <div class="card">
+      <h3>Vector Databases</h3>
+      <p>Specialized for storing and querying vector embeddings used in AI applications (Pinecone, Weaviate).</p>
+      <span class="badge badge-success">AI/ML</span>
+    </div>
+    <div class="card">
+      <h3>Multi-Model Databases</h3>
+      <p>Support multiple data models (document, graph, key-value) in a single database (ArangoDB, OrientDB).</p>
+      <span class="badge badge-success">Flexible</span>
+    </div>
+  </div>
+  
+  <h3>Database as a Service (DBaaS) Providers</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Relational</th>
+        <th>NoSQL</th>
+        <th>Specialized</th>
+        <th>Key Features</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Amazon Web Services</td>
+        <td>RDS, Aurora</td>
+        <td>DynamoDB, DocumentDB</td>
+        <td>Timestream, Quantum Ledger</td>
+        <td>Broadest selection, global reach</td>
+      </tr>
+      <tr>
+        <td>Microsoft Azure</td>
+        <td>SQL Database</td>
+        <td>Cosmos DB</td>
+        <td>Cache for Redis</td>
+        <td>Deep Microsoft integration</td>
+      </tr>
+      <tr>
+        <td>Google Cloud</td>
+        <td>Cloud SQL</td>
+        <td>Firestore, Datastore</td>
+        <td>Bigtable, Spanner</td>
+        <td>Global consistency, ML integration</td>
+      </tr>
+      <tr>
+        <td>MongoDB Atlas</td>
+        <td>-</td>
+        <td>MongoDB</td>
+        <td>Search, Data Lake</td>
+        <td>Full MongoDB feature set</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <div class="footer-content">
+    <h3>Database Concepts</h3>
+    <p>A comprehensive educational resource by Prashanna Tiwari</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fas fa-envelope"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p>&copy; 2023 All Rights Reserved</p>
+  </div>
+</footer>
+</body>
+</html>
