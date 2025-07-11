@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Year Questions of DBMS (2020-2024 and Model Questions)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .question-header {
+            background: linear-gradient(to right, #2ecc71, #27ae60);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        .question-number {
+            background: white;
+            color: #27ae60;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        
+        .question-title {
+            font-size: 1.4rem;
+            flex-grow: 1;
+        }
+        
+        .answer-content {
+            padding: 25px;
+            background: #f9f9f9;
+            border-left: 5px solid #2ecc71;
+        }
+        
+        .answer-content p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .example-box {
+            background: #e8f4f1;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-title i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .question-title {
+                font-size: 1.2rem;
+            }
+            
+            .answer-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Database Concepts</h1>
+            <p class="subtitle">Past Year Questions of DBMS (2020-2024 and Model Questions)</p>
+        </header>
+
+        <!-- Question 1 -->
+        <div class="content-card">
+            <div class="question-header">
+                <div class="question-number">1</div>
+                <div class="question-title">What is Database and DBMS? List out the advantages and disadvantages of DBMS.</div>
+            </div>
+            <div class="answer-content">
+                <p>A database is an organized collection of related data stored electronically in a computer system. For example, a school might have a database containing student records, course information, and grades.</p>
+                
+                <p>A Database Management System (DBMS) is software that allows users to interact with databases. Popular DBMS include MySQL, Oracle, and Microsoft SQL Server. It provides tools for creating, modifying, and querying databases.</p>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-check-circle"></i>Advantages of DBMS</div>
+                    <p>Data redundancy is minimized, data integrity is maintained through constraints, data can be shared among multiple users concurrently, and security features protect sensitive information.</p>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-exclamation-triangle"></i>Disadvantages of DBMS</div>
+                    <p>Setting up a DBMS requires significant investment in hardware and software. Complex systems require specialized personnel to manage them, and converting from traditional systems can be challenging.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="content-card">
+            <div class="question-header">
+                <div class="question-number">2</div>
+                <div class="question-title">Differentiate between file processing system and DBMS. Give at least four points.</div>
+            </div>
+            <div class="answer-content">
+                <p>File processing systems store data in separate files for each application, while DBMS stores data in a centralized repository accessible to multiple applications.</p>
+                
+                <p>In file processing systems, data redundancy is common as the same information may be stored in multiple files. DBMS minimizes redundancy by storing data in a structured format.</p>
+                
+                <p>File systems have limited data sharing capabilities and often require data duplication. DBMS allows concurrent access to data by multiple users without compromising integrity.</p>
+                
+                <p>DBMS provides robust security features like user authentication and access control, which are typically lacking in file processing systems.</p>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-file-alt"></i>Example</div>
+                    <p>In a file system, student information might be duplicated in separate files for registration, grades, and library. In DBMS, this information is stored once and accessed by all departments.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="content-card">
+            <div class="question-header">
+                <div class="question-number">3</div>
+                <div class="question-title">Explain the different models of DBMS with advantages and disadvantages.</div>
+            </div>
+            <div class="answer-content">
+                <p><strong>Hierarchical Model:</strong> Organizes data in a tree-like structure with parent-child relationships. Used in early banking systems. Advantages include efficiency for 1:N relationships. Disadvantages include complexity in representing M:N relationships.</p>
+                
+                <p><strong>Network Model:</strong> Similar to hierarchical but allows multiple parent-child relationships. Used in airline reservation systems. Advantages include efficient complex queries. Disadvantages include complexity in design and maintenance.</p>
+                
+                <p><strong>Relational Model:</strong> Stores data in tables (relations) with rows and columns. Used in most modern systems. Advantages include simplicity and flexibility. Disadvantages include performance issues with very large databases.</p>
+                
+                <p><strong>Object-Oriented Model:</strong> Stores data as objects with attributes and methods. Used in CAD systems. Advantages include handling complex data. Disadvantages include lack of standardization.</p>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-table"></i>Example</div>
+                    <p>In a relational model, student data would be in one table and courses in another, linked by keys. In hierarchical, students might be parents to their enrolled courses.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="content-card">
+            <div class="question-header">
+                <div class="question-number">4</div>
+                <div class="question-title">What is a relational database? How is it different from other database models?</div>
+            </div>
+            <div class="answer-content">
+                <p>A relational database organizes data into tables (relations) consisting of rows (tuples) and columns (attributes). Tables are related through keys (primary and foreign keys).</p>
+                
+                <p>Unlike hierarchical and network models that use pointers and complex structures, relational databases use simple tabular structures that are easy to understand and manipulate.</p>
+                
+                <p>Relational databases use SQL (Structured Query Language) for data manipulation, which is standardized across different systems. Other models typically use proprietary query languages.</p>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-project-diagram"></i>Example</div>
+                    <p>In a library system, a relational database would have separate tables for books, authors, and borrowers linked by keys. A hierarchical model might represent books as children of authors, making it harder to represent books with multiple authors.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="content-card">
+            <div class="question-header">
+                <div class="question-number">5</div>
+                <div class="question-title">What is data redundancy? How does DBMS help in reducing it?</div>
+            </div>
+            <div class="answer-content">
+                <p>Data redundancy occurs when the same piece of data is stored in multiple places within a database or across multiple systems. This wastes storage space and can lead to data inconsistency.</p>
+                
+                <p>DBMS reduces redundancy through normalization, which organizes data to minimize duplication. By using relationships between tables, data is stored only once and referenced where needed.</p>
+                
+                <p>Foreign keys in relational databases allow linking to data in other tables instead of duplicating it. Constraints ensure that updates propagate to all references.</p>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-clone"></i>Example</div>
+                    <p>Without DBMS, student addresses might be stored in registration, library, and billing files. With DBMS, the address is stored once in a student table and referenced elsewhere through student ID.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="content-card">
+            <div class="question-header">
+                <div class="question-number">6</div>
+                <div class="question-title">Differentiate between centralized and distributed database systems.</div>
+            </div>
+            <div class="answer-content">
+                <p>A centralized database stores all data in a single location, such as a main server computer. All users access this central repository. This simplifies management but creates a single point of failure.</p>
+                
+                <p>A distributed database spreads data across multiple physical locations connected through a network. Data may be partitioned or replicated across these locations.</p>
+                
+                <p>Centralized databases are typically easier to maintain and secure but can become bottlenecks with many users. Distributed databases offer better scalability and fault tolerance but are more complex to administer.</p>
+                
+                <div class="example-box">
+                    <div class="example-title"><i class="fas fa-server"></i>Example</div>
+                    <p>A small business might use a centralized database on their office server. A multinational company would use a distributed database with servers in different countries to serve local offices faster.</p>
+                </div>
+            </div>
+            <!-- Question 7 -->
+<div class="content-card">
+    <div class="question-header">
+        <div class="question-number">7</div>
+        <div class="question-title">Who is Database Administrator (DBA)? What are the major responsibilities of DBA?</div>
+    </div>
+    <div class="answer-content">
+        <p>A Database Administrator (DBA) is a professional responsible for managing, maintaining, and securing databases within an organization. They ensure that databases run efficiently, securely, and are accessible to authorized users.</p>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-user-shield"></i>Responsibilities of DBA</div>
+            <p>
+                • Database design and implementation<br>
+                • Performance tuning and optimization<br>
+                • Backup and recovery planning<br>
+                • Security management (user roles, permissions)<br>
+                • Data integrity and consistency checks<br>
+                • Monitoring database performance and troubleshooting issues
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Question 8 -->
+<div class="content-card">
+    <div class="question-header">
+        <div class="question-number">8</div>
+        <div class="question-title">Define normalization. Explain 1NF, 2NF and 3NF with suitable examples.</div>
+    </div>
+    <div class="answer-content">
+        <p>Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. It involves dividing large tables into smaller related ones and defining relationships between them.</p>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-layer-group"></i>1st Normal Form (1NF)</div>
+            <p>Ensures that each column contains atomic (indivisible) values and each record is unique.</p>
+            <p><strong>Example:</strong> A table storing multiple phone numbers in a single column violates 1NF.</p>
+        </div>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-layer-group"></i>2nd Normal Form (2NF)</div>
+            <p>Meets 1NF and removes partial dependencies; all non-key attributes are fully functionally dependent on the primary key.</p>
+            <p><strong>Example:</strong> In a table with composite key (StudentID, CourseID), storing StudentName causes redundancy.</p>
+        </div>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-layer-group"></i>3rd Normal Form (3NF)</div>
+            <p>Meets 2NF and removes transitive dependencies; non-key attributes should not depend on other non-key attributes.</p>
+            <p><strong>Example:</strong> If Student table stores both StudentID and DepartmentName, and DepartmentName depends on DepartmentID, move it to another table.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Question 9 -->
+<div class="content-card">
+    <div class="question-header">
+        <div class="question-number">9</div>
+        <div class="question-title">Explain the terms: primary key, foreign key, and candidate key with examples.</div>
+    </div>
+    <div class="answer-content">
+        <p><strong>Primary Key:</strong> A column (or set of columns) that uniquely identifies each row in a table. It cannot have null or duplicate values.</p>
+        <p><strong>Foreign Key:</strong> A column that creates a relationship between two tables. It refers to the primary key in another table.</p>
+        <p><strong>Candidate Key:</strong> All columns that can uniquely identify rows. One of them is selected as the primary key.</p>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-key"></i>Example</div>
+            <p>In a Student table, StudentID can be the primary key. Email and RollNumber may be candidate keys. In an Enrollment table, StudentID can be a foreign key referencing the Student table.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Question 10 -->
+<div class="content-card">
+    <div class="question-header">
+        <div class="question-number">10</div>
+        <div class="question-title">What is SQL? Explain its components and common functions.</div>
+    </div>
+    <div class="answer-content">
+        <p>SQL (Structured Query Language) is a standardized language used to interact with relational databases. It is used to create, read, update, and delete data.</p>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-code"></i>Components of SQL</div>
+            <p>
+                • <strong>DDL (Data Definition Language):</strong> Defines database schema (e.g., CREATE, ALTER, DROP)<br>
+                • <strong>DML (Data Manipulation Language):</strong> Handles data manipulation (e.g., SELECT, INSERT, UPDATE, DELETE)<br>
+                • <strong>DCL (Data Control Language):</strong> Controls access (e.g., GRANT, REVOKE)<br>
+                • <strong>TCL (Transaction Control Language):</strong> Manages transactions (e.g., COMMIT, ROLLBACK)
+            </p>
+        </div>
+
+        <div class="example-box">
+            <div class="example-title"><i class="fas fa-cogs"></i>Common Functions</div>
+            <p>
+                • <strong>SELECT:</strong> Retrieves data from one or more tables<br>
+                • <strong>WHERE:</strong> Filters records<br>
+                • <strong>GROUP BY:</strong> Groups records with identical data<br>
+                • <strong>JOIN:</strong> Combines rows from multiple tables<br>
+                • <strong>ORDER BY:</strong> Sorts the results
+            </p>
+        </div>
+    </div>
+</div>
