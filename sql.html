@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SQL Commands Tutorial</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      background-color: #f9f9f9; 
+      color: #333; 
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #333;
+      overflow: hidden;
+    }
+    nav a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    .container {
+      padding: 20px;
+    }
+    pre { 
+      background: #f4f4f4; 
+      padding: 10px; 
+      border: 1px solid #ddd; 
+      border-radius: 5px; 
+      overflow-x: auto; 
+    }
+    .query-block { 
+      margin-bottom: 40px; 
+      transition: transform 0.2s; 
+    }
+    .query-block:hover { 
+      transform: scale(1.02); 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+    }
+    .label { 
+      font-weight: bold; 
+      margin-bottom: 5px; 
+      display: block; 
+    }
+    img { 
+      max-width: 100%; 
+      height: auto; 
+      margin-top: 10px; 
+      border-radius: 5px; 
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #4CAF50;
+      color: white;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Write SQL commands to perform the following operations: -</h1>
+  </header>
+  
+  <nav>
+    <a href="#create">Create Table</a>
+    <a href="#insert">Insert Records</a>
+    <a href="#select">Display Records</a>
+    <a href="#update">Update Marks</a>
+    <a href="#delete">Delete Record</a>
+  </nav>
+
+  <div class="container">
+    <!-- a. Create table -->
+    <div class="query-block" id="create">
+      <pre>
+-- a. Create a table named students
+CREATE TABLE students (
+  Id INT PRIMARY KEY,
+  Name VARCHAR(100),
+  Class VARCHAR(50),
+  Marks INT
+);
+      </pre>
+      <span class="label">Picture explaining the CREATE TABLE query:</span>
+      <img src="out1.png" alt="CREATE TABLE students structure">
+    </div>
+
+    <!-- b. Insert records -->
+    <div class="query-block" id="insert">
+      <pre>
+-- b. Insert records into the students table
+INSERT INTO students (Id, Name, Class, Marks) VALUES
+  (1, 'Anita', '10A', 78),
+  (2, 'Bikram', '10B', 82),
+  (3, 'Chandra', '10A', 90),
+  (4, 'Dipti', '10C', 67);
+      </pre>
+      <span class="label">Picture explaining the INSERT INTO query:</span>
+      <img src="out2.png" alt="INSERT INTO students data">
+    </div>
+
+    <!-- c. Display all records -->
+    <div class="query-block" id="select">
+      <pre>
+-- c. Display all records from the students table
+SELECT * FROM students;
+      </pre>
+      <span class="label">Picture explaining the SELECT * query:</span>
+      <img src="out3.png" alt="SELECT * from students">
+    </div>
+
+    <!-- d. Update marks for Anita -->
+    <div class="query-block" id="update">
+      <pre>
+-- d. Update the marks of student named 'Anita' to 85
+UPDATE students
+SET Marks = 85
+WHERE Name = 'Anita';
+      </pre>
+      <span class="label">Picture explaining the UPDATE query:</span>
+      <img src="out4.png" alt="UPDATE students SET Marks for Anita">
+    </div>
+
+    <!-- e. Delete record with id = 3 -->
+    <div class="query-block" id="delete">
+      <pre>
+-- e. Delete the record of the student with id = 3
+DELETE FROM students
+WHERE Id = 3;
+      </pre>
+      <span class="label">Picture explaining the DELETE query:</span>
+      <img src="out5.png" alt="DELETE FROM students where Id=3">
+    </div>
+  </div>
+</body>
+</html>
