@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>C Programming Concepts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: wheat;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .term-block {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+    .term-block:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      color: #4CAF50;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #4CAF50;
+      color: white;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Unit 2 –C programming</h1>
+  </header>
+  
+  <div class="container">
+    <div class="term-block">
+      <h2>1. Working with a Function</h2>
+      
+      <h3>a. Define Function</h3>
+      <p>A function is a block of code that performs a specific task. It is a reusable piece of code that can be called multiple times throughout a program.</p>
+
+      <h3>b. Syntax of Functions</h3>
+      <p>The basic syntax of a function in C is as follows:</p>
+      <pre>
+return_type function_name(parameters) {
+    // function body
+}
+      </pre>
+
+      <h3>c. Types of Functions</h3>
+      <p>Functions in C can be categorized into two types:</p>
+      <ul>
+        <li><strong>Library Functions:</strong> Predefined functions provided by C libraries, e.g., <code>printf()</code>.</li>
+        <li><strong>User Defined Functions:</strong> Functions defined by the user to perform specific tasks.</li>
+      </ul>
+
+      <h3>d. Components of a Function</h3>
+      <ul>
+        <li><strong>Function Prototype:</strong> A declaration of the function that specifies its name, return type, and parameters.</li>
+        <li><strong>Function Call:</strong> The point in the code where the function is invoked.</li>
+        <li><strong>Function Definition:</strong> The actual implementation of the function.</li>
+        <li><strong>Return Type:</strong> The data type of the value returned by the function.</li>
+      </ul>
+    </div>
+
+    <div class="term-block">
+      <h2>2. Categories of Functions</h2>
+      
+      <h3>i. Function with Return Type but No Arguments</h3>
+      <pre>
+int getNumber() {
+    return 5;
+}
+      </pre>
+
+      <h3>ii. Function with Return Type with Arguments</h3>
+      <pre>
+int add(int a, int b) {
+    return a + b;
+}
+      </pre>
+
+      <h3>iii. Function with No Return Type with No Arguments</h3>
+      <pre>
+void displayMessage() {
+    printf("Hello, World!");
+}
+      </pre>
+
+      <h3>iv. Function with No Return Type with Arguments</h3>
+      <pre>
+void printSum(int a, int b) {
+    printf("Sum: %d", a + b);
+}
+      </pre>
+    </div>
+
+    <div class="term-block">
+      <h2>3. Storage Classes</h2>
+      
+      <h3>i. Automatic</h3>
+      <p>Automatic variables are created when a function is called and destroyed when it exits. They have local scope.</p>
+
+      <h3>ii. External</h3>
+      <p>External variables are defined outside any function and can be accessed from any function within the same file or other files.</p>
+
+      <h3>iii. Register</h3>
+      <p>Register variables are stored in CPU registers for faster access. They have local scope and are declared with the <code>register</code> keyword.</p>
+
+      <h3>iv. Static</h3>
+      <p>Static variables maintain their value between function calls and have local scope. They are declared with the <code>static</code> keyword.</p>
+    </div>
+
+    <div class="term-block">
+      <h2>4. Recursive Function</h2>
+      <p>A recursive function is a function that calls itself to solve a problem. A recursive function in C is a function that calls itself during its execution. This technique is used to solve problems by breaking them down into smaller, similar subproblems. </p>
+      <pre>
+return_type function_name(parameters) {
+    if (base_condition) {
+        return some_value;
+    } else {
+        return function_name(modified_parameters);
+    }
+}
+      </pre>
+      <h3>Example:</h3>
+      <pre>
+#include <stdio.h>
+
+// Recursive function to compute factorial
+unsigned long factorial(unsigned int n) {
+    // Base case: when n is 0 or 1, return 1
+    if (n == 0 || n == 1)
+        return 1;
+    // Recursive case: n * factorial(n - 1)
+    return n * factorial(n - 1);
+}
+
+int main() {
+    unsigned int num = 5;
+    printf("Factorial of %u is %lu\n", num, factorial(num));
+    return 0;
+}
+
+      </pre>
+      <img src ="cout1.png" height="100px" width="700px" >
+    </div>
+
+    <div class="term-block">
+      <h2>5. Demonstration of Passing Array to a Function</h2>
+      <p>Arrays can be passed to functions to manipulate the data. Here’s an example:</p>
+      <pre>
+#include <stdio.h>
+
+// Function that receives an array and its size, then returns the sum
+int sumArray(int arr[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+int main() {
+    int numbers[] = {10, 20, 30, 40, 50};
+    int size = sizeof(numbers) / sizeof(numbers[0]);
+
+    // Pass the array and its length to the function
+    int total = sumArray(numbers, size);
+    printf("Sum of array elements: %d\n", total);
+    return 0;
+}
+      </pre>
+<img src ="cout1.png" height="100px" width="700px" FROM students where Id=3">
+    </div>
+  </div>
+
+  <footer>
+    <p>Prashanna Tiwari</p>
+  </footer>
+</body>
+</html>
