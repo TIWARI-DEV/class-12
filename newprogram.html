@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Unit 4 Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a4a6c, #4a6a9c);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subheading {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 15px;
+        }
+        
+        .nav-links li {
+            margin: 8px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background: #2c3e50;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links a:hover {
+            background: #3498db;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 15px;
+            color: #3498db;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin: 20px 0 15px;
+            font-size: 1.7rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        .code-keyword {
+            color: #f92672;
+        }
+        
+        .code-function {
+            color: #66d9ef;
+        }
+        
+        .code-comment {
+            color: #75715e;
+        }
+        
+        .code-string {
+            color: #e6db74;
+        }
+        
+        .code-variable {
+            color: #a6e22e;
+        }
+        
+        .note {
+            background: #fffde7;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .note-title {
+            font-weight: bold;
+            color: #ff9800;
+            margin-bottom: 8px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .card-title {
+            color: #2980b9;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        .table th {
+            background: #3498db;
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .table tr:nth-child(even) {
+            background: #f5f9fc;
+        }
+        
+        .table tr:hover {
+            background: #ebf5fb;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subheading {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>C Programming: Unit 4</h1>
+            <p class="subheading">Master Functions, Structures, Pointers, and File Handling</p>
+        </header>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#functions"><i class="fas fa-code"></i> Functions</a></li>
+                <li><a href="#structures"><i class="fas fa-cubes"></i> Structures & Unions</a></li>
+                <li><a href="#pointers"><i class="fas fa-bullseye"></i> Pointers</a></li>
+                <li><a href="#file-handling"><i class="fas fa-file-alt"></i> File Handling</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Functions Section -->
+        <section id="functions" class="section">
+            <h2 class="section-title"><i class="fas fa-code"></i> Functions in C</h2>
+            
+            <p>Functions are self-contained blocks of code that perform a specific task. They help in breaking down complex problems into smaller, manageable parts.</p>
+            
+            <h3>Function Syntax</h3>
+            <div class="code-block">
+                <span class="code-keyword">return_type</span> function_name(<span class="code-variable">parameters</span>) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// function body</span><br>
+                }
+            </div>
+            
+            <h3>Components of a Function</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">Function Prototype</h4>
+                    <p>Declares the function before it's defined, specifying return type, name, and parameters.</p>
+                    <div class="code-block">
+                        <span class="code-keyword">int</span> <span class="code-function">add</span>(<span class="code-keyword">int</span> a, <span class="code-keyword">int</span> b);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Function Definition</h4>
+                    <p>Actual implementation of the function with code.</p>
+                    <div class="code-block">
+                        <span class="code-keyword">int</span> <span class="code-function">add</span>(<span class="code-keyword">int</span> a, <span class="code-keyword">int</span> b) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> a + b;<br>
+                        }
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Function Call</h4>
+                    <p>Invokes the function to execute its code.</p>
+                    <div class="code-block">
+                        <span class="code-keyword">int</span> result = <span class="code-function">add</span>(5, 3);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Return Statement</h4>
+                    <p>Exits the function and returns a value to the caller.</p>
+                    <div class="code-block">
+                        <span class="code-keyword">return</span> value;
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Passing Arguments</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">Call by Value</h4>
+                    <p>Passes a copy of the argument's value. Changes inside the function don't affect the original.</p>
+                    <div class="code-block">
+                        <span class="code-keyword">void</span> <span class="code-function">increment</span>(<span class="code-keyword">int</span> x) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;x++;<br>
+                        }
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Call by Reference</h4>
+                    <p>Passes the address of the argument. Changes inside the function affect the original.</p>
+                    <div class="code-block">
+                        <span class="code-keyword">void</span> <span class="code-function">incrementRef</span>(<span class="code-keyword">int</span> *x) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;(*x)++;<br>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Recursive Functions</h3>
+            <p>A function that calls itself to solve smaller instances of the same problem.</p>
+            <div class="code-block">
+                <span class="code-comment">// Factorial using recursion</span><br>
+                <span class="code-keyword">int</span> <span class="code-function">factorial</span>(<span class="code-keyword">int</span> n) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (n == 0)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> 1;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> n * <span class="code-function">factorial</span>(n - 1);<br>
+                }
+            </div>
+            
+            <div class="note">
+                <div class="note-title">Recursion Advantages:</div>
+                <p>Elegant solution for problems with recursive nature (trees, graphs, divide-and-conquer).</p>
+            </div>
+            
+            <div class="note">
+                <div class="note-title">Recursion Disadvantages:</div>
+                <p>Can cause stack overflow for large inputs and may be less efficient than iterative solutions.</p>
+            </div>
+        </section>
+        
+        <!-- Structures & Unions Section -->
+        <section id="structures" class="section">
+            <h2 class="section-title"><i class="fas fa-cubes"></i> Structures & Unions</h2>
+            
+            <h3>Structures</h3>
+            <p>User-defined data type that groups variables of different types under a single name.</p>
+            
+            <div class="code-block">
+                <span class="code-comment">// Structure syntax</span><br>
+                <span class="code-keyword">struct</span> <span class="code-variable">Student</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">char</span> name[50];<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> roll;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> marks;<br>
+                };
+            </div>
+            
+            <h3>Accessing Structure Members</h3>
+            <div class="code-block">
+                <span class="code-comment">// Create structure variable</span><br>
+                <span class="code-keyword">struct</span> <span class="code-variable">Student</span> s1;<br><br>
+                
+                <span class="code-comment">// Access members</span><br>
+                strcpy(s1.name, <span class="code-string">"John Doe"</span>);<br>
+                s1.roll = 101;<br>
+                s1.marks = 85.5;
+            </div>
+            
+            <h3>Nested Structures</h3>
+            <div class="code-block">
+                <span class="code-keyword">struct</span> <span class="code-variable">Address</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">char</span> city[50];<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> pincode;<br>
+                };<br><br>
+                
+                <span class="code-keyword">struct</span> <span class="code-variable">Employee</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">char</span> name[50];<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">struct</span> <span class="code-variable">Address</span> addr;<br>
+                };
+            </div>
+            
+            <h3>Unions</h3>
+            <p>Similar to structures but all members share the same memory location.</p>
+            <div class="code-block">
+                <span class="code-keyword">union</span> <span class="code-variable">Data</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> i;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> f;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">char</span> str[20];<br>
+                };
+            </div>
+            
+            <h3>Structure vs. Union</h3>
+            <table class="table">
+                <tr>
+                    <th>Feature</th>
+                    <th>Structure</th>
+                    <th>Union</th>
+                </tr>
+                <tr>
+                    <td>Memory Allocation</td>
+                    <td>Each member has its own memory</td>
+                    <td>All members share the same memory</td>
+                </tr>
+                <tr>
+                    <td>Total Size</td>
+                    <td>Sum of all members + padding</td>
+                    <td>Size of the largest member</td>
+                </tr>
+                <tr>
+                    <td>Member Access</td>
+                    <td>All members accessible at any time</td>
+                    <td>Only one member can be accessed at a time</td>
+                </tr>
+                <tr>
+                    <td>Use Case</td>
+                    <td>Group related data of different types</td>
+                    <td>Memory-efficient storage for different data types</td>
+                </tr>
+            </table>
+        </section>
+        
+        <!-- Pointers Section -->
+        <section id="pointers" class="section">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> Pointers in C</h2>
+            
+            <p>Pointers are variables that store memory addresses. They provide powerful capabilities for dynamic memory management and efficient data manipulation.</p>
+            
+            <h3>Pointer Syntax</h3>
+            <div class="code-block">
+                <span class="code-keyword">int</span> num = 10;<br>
+                <span class="code-keyword">int</span> *ptr; <span class="code-comment">// Pointer declaration</span><br>
+                ptr = &amp;num; <span class="code-comment">// Assign address of num to ptr</span><br><br>
+                
+                printf(<span class="code-string">"Value: %d\n"</span>, *ptr); <span class="code-comment">// Access value using pointer</span>
+            </div>
+            
+            <h3>Pointers and Functions</h3>
+            <div class="code-block">
+                <span class="code-comment">// Function using pointers</span><br>
+                <span class="code-keyword">void</span> <span class="code-function">swap</span>(<span class="code-keyword">int</span> *a, <span class="code-keyword">int</span> *b) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> temp = *a;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;*a = *b;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;*b = temp;<br>
+                }<br><br>
+                
+                <span class="code-comment">// Calling the function</span><br>
+                <span class="code-keyword">int</span> x = 5, y = 10;<br>
+                <span class="code-function">swap</span>(&amp;x, &amp;y);
+            </div>
+            
+            <h3>Pointers and Arrays</h3>
+            <div class="code-block">
+                <span class="code-keyword">int</span> arr[5] = {1, 2, 3, 4, 5};<br>
+                <span class="code-keyword">int</span> *ptr = arr; <span class="code-comment">// Points to first element</span><br><br>
+                
+                <span class="code-comment">// Access array elements using pointer</span><br>
+                <span class="code-keyword">for</span>(<span class="code-keyword">int</span> i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="code-string">"%d "</span>, *(ptr + i));<br>
+                }
+            </div>
+            
+            <h3>Call by Value vs. Call by Reference</h3>
+            <table class="table">
+                <tr>
+                    <th>Call by Value</th>
+                    <th>Call by Reference</th>
+                </tr>
+                <tr>
+                    <td>Passes a copy of the value</td>
+                    <td>Passes the address of the variable</td>
+                </tr>
+                <tr>
+                    <td>Original value remains unchanged</td>
+                    <td>Original value can be modified</td>
+                </tr>
+                <tr>
+                    <td>Memory efficient for small data</td>
+                    <td>Efficient for large data structures</td>
+                </tr>
+                <tr>
+                    <td>Simple and safe</td>
+                    <td>Requires careful handling to avoid errors</td>
+                </tr>
+            </table>
+        </section>
+        
+        <!-- File Handling Section -->
+        <section id="file-handling" class="section">
+            <h2 class="section-title"><i class="fas fa-file-alt"></i> File Handling in C</h2>
+            
+            <p>File handling allows programs to store data persistently and access it later. C provides a comprehensive set of functions for file operations.</p>
+            
+            <h3>File Handling Steps</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">1. Define File Pointer</h4>
+                    <div class="code-block">
+                        FILE *filePtr;
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">2. Open File</h4>
+                    <div class="code-block">
+                        filePtr = fopen("filename.txt", "mode");
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">3. Perform Operations</h4>
+                    <p>Read, write, or append data</p>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">4. Close File</h4>
+                    <div class="code-block">
+                        fclose(filePtr);
+                    </div>
+                </div>
+            </div>
+            
+            <h3>File Opening Modes</h3>
+            <table class="table">
+                <tr>
+                    <th>Mode</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>"r"</td>
+                    <td>Open for reading (file must exist)</td>
+                </tr>
+                <tr>
+                    <td>"w"</td>
+                    <td>Open for writing (creates new or truncates existing)</td>
+                </tr>
+                <tr>
+                    <td>"a"</td>
+                    <td>Open for appending (creates file if doesn't exist)</td>
+                </tr>
+                <tr>
+                    <td>"r+"</td>
+                    <td>Open for both reading and writing</td>
+                </tr>
+                <tr>
+                    <td>"w+"</td>
+                    <td>Open for reading and writing (truncates existing)</td>
+                </tr>
+                <tr>
+                    <td>"a+"</td>
+                    <td>Open for reading and appending</td>
+                </tr>
+            </table>
+            
+            <h3>File Handling Functions</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">fopen() & fclose()</h4>
+                    <div class="code-block">
+                        FILE *fopen(<span class="code-keyword">const</span> <span class="code-keyword">char</span> *filename, <span class="code-keyword">const</span> <span class="code-keyword">char</span> *mode);<br>
+                        <span class="code-keyword">int</span> fclose(FILE *stream);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">fprintf() & fscanf()</h4>
+                    <div class="code-block">
+                        <span class="code-keyword">int</span> fprintf(FILE *stream, <span class="code-keyword">const</span> <span class="code-keyword">char</span> *format, ...);<br>
+                        <span class="code-keyword">int</span> fscanf(FILE *stream, <span class="code-keyword">const</span> <span class="code-keyword">char</span> *format, ...);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">fgets() & fputs()</h4>
+                    <div class="code-block">
+                        <span class="code-keyword">char</span> *fgets(<span class="code-keyword">char</span> *str, <span class="code-keyword">int</span> n, FILE *stream);<br>
+                        <span class="code-keyword">int</span> fputs(<span class="code-keyword">const</span> <span class="code-keyword">char</span> *str, FILE *stream);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">fread() & fwrite()</h4>
+                    <div class="code-block">
+                        <span class="code-keyword">size_t</span> fread(<span class="code-keyword">void</span> *ptr, <span class="code-keyword">size_t</span> size, <span class="code-keyword">size_t</span> nmemb, FILE *stream);<br>
+                        <span class="code-keyword">size_t</span> fwrite(<span class="code-keyword">const</span> <span class="code-keyword">void</span> *ptr, <span class="code-keyword">size_t</span> size, <span class="code-keyword">size_t</span> nmemb, FILE *stream);
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Random Access Functions</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">fseek()</h4>
+                    <p>Set file position to a specific location</p>
+                    <div class="code-block">
+                        <span class="code-keyword">int</span> fseek(FILE *stream, <span class="code-keyword">long</span> offset, <span class="code-keyword">int</span> whence);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">rewind()</h4>
+                    <p>Set file position to the beginning</p>
+                    <div class="code-block">
+                        <span class="code-keyword">void</span> rewind(FILE *stream);
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">ftell()</h4>
+                    <p>Get current file position</p>
+                    <div class="code-block">
+                        <span class="code-keyword">long</span> ftell(FILE *stream);
+                    </div>
+                </div>
+            </div>
+            
+            <h3>typedef Keyword</h3>
+            <p>The typedef keyword allows you to create an alias for existing data types, improving code readability.</p>
+            <div class="code-block">
+                <span class="code-keyword">typedef</span> <span class="code-keyword">unsigned</span> <span class="code-keyword">long</span> <span class="code-keyword">int</span> ULONG;<br>
+                ULONG distance; <span class="code-comment">// Equivalent to unsigned long int distance</span>
+            </div>
+        </section>
+        
+        <footer>
+           
+        </footer>
+    </div>
+</body>
+</html>
